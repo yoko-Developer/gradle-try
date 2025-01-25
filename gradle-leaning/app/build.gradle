@@ -5,43 +5,56 @@
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/8.8/userguide/building_java_projects.html in the Gradle documentation.
  */
 
+// アプリケーションの機能を拡張するソフトウェア
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
+    // CLI（コマンドラインインターフェイス）アプリケーションのビルドや実行をサポートする
     id 'application'
 }
 
+// 保管場所
 repositories {
-    // Use Maven Central for resolving dependencies.
+    // 外部ライブラリとの依存関係を解決する
     mavenCentral()
 }
 
+// 依存関係
 dependencies {
-    // Use JUnit Jupiter for testing.
+    // JUNIT5のテスト実行に必要なライブラリ
     testImplementation libs.junit.jupiter
-
+    // テスト実行時のみ必要なライブラリ
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    // This dependency is used by the application.
+    // 機能や技術などを仕様や規格に基づいて組み込むこと
     implementation libs.guava
 
+    // Apache POIのExcel操作用のコアライブラリ
     implementation 'org.apache.poi:poi:5.2.3'
+    // Apache POIのOOXMLフォーマット（Excel 2007以降）のサポートライブラリ
     implementation 'org.apache.poi:poi-ooxml:5.2.3'
+    // XML操作用ライブラリ（POIの内部依存関係）
     implementation 'org.apache.xmlbeans:xmlbeans:5.1.1'
 }
 
-// Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
+        // Gradleが使用するJavaバージョン
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
 application {
-    // Define the main class for the application.
+    // エントリーポイント
     mainClass = 'gradle.leaning.App'
 }
 
 tasks.named('test') {
-    // Use JUnit Platform for unit tests.
+    // JUNIT5を使用する設定
     useJUnitPlatform()
+}
+
+// build.gradle
+task helloWorld {
+    doLast {
+        println 'Hello, World!'
+    }
 }
